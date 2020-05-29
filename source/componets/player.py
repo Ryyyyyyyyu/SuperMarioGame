@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
 
     def load_data(self):
         file_name = self.name + '.json'
-        file_path = os.path.join(r'F:\pyCharm projects\SuperMaryGame\source\data\player', file_name)
+        file_path = os.path.join(r'E:\PycharmProjects\SuperMarioGame\source\data\player', file_name)
         with open(file_path) as f:
             self.play_date = json.load(f)
 
