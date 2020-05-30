@@ -24,17 +24,30 @@ class Player(pygame.sprite.Sprite):
         file_name = self.name + '.json'
         file_path = os.path.join(r'F:\pyCharm projects\SuperMaryGame\source\data\player', file_name)
         with open(file_path) as f:
-            self.play_date = json.load(f)
+            self.player_date = json.load(f)
 
     def setup_states(self):
-        self.state = 'walk'
+        self.state = 'stand'
         self.face_right = True
         self.deas = False
         self.big = False
 
     def setup_velocities(self):
+        speed = self.player_date['speed']
         self.x_vel = 0
         self.y_vel = 0
+
+        self.max_walk_vel = speed['max_walk_speed']
+        self.max_run_vel = speed['max_run_speed']
+        self.max_y_vel = speed['max_y_velocity']
+        self.jump_vel = speed['jump_velocity']
+        self.walk_accel = speed['walk_accel']
+        self.run_accel = speed['run_accel']
+        self.turn_accel = speed['turn_accel']
+        self.gravity = C.GRAVITY
+
+        self.max_x_vel = self.max_walk_vel
+        self.x_accel = self.walk_accel
 
     def setup_timer(self):
         self.walking_timer = 0
@@ -42,7 +55,7 @@ class Player(pygame.sprite.Sprite):
 
     def load_images(self):
         sheet = setup.GRAPHICS['mario_bros']
-        frame_rects = self.play_date['image_frames']
+        frame_rects = self.player_date['image_frames']
 
         self.right_small_normal_frames = []
         self.right_big_normal_frames = []
@@ -87,21 +100,28 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, keys):
         self.current_time = pygame.time.get_ticks()
-        if keys[pygame.K_RIGHT]:
-            self.state = 'walk'
-            self.x_vel = 5
-            self.y_vel = 0
-            self.frames = self.right_frames
-        if keys[pygame.K_LEFT]:
-            self.state = 'walk'
-            self.x_vel = -5
-            self.y_vel = 0
-            self.frames = self.left_frames
+        self.handle_states(keys)
 
-        if self.state == 'walk':
-            if self.current_time - self.walking_timer > 100:
-                self.walking_timer = self.current_time
-                self.frame_index += 1
-                self.frame_index %= 4
+    def handle_states(self,keys):
+        if self.state == 'stand':
+            self.stand(keys)
+        elif self.state == 'walk':
+            self.walk(keys)
+        elif self.state == 'jump':
+            self.jump(keys)
 
-        self.image = self.frames[self.frame_index]
+        if self.face_right:
+            self.image = self.right_frames[self.frame_index]
+        else:
+            self.image = self.left_frames[self.frame_index]
+
+    def stand(self, keys):
+        self.frame_index = 0
+        self.x_vel = 0
+        self.y_vel = 0
+
+    def walk(self, keys):
+        pass
+
+    def jump(self, keys):
+        pass
