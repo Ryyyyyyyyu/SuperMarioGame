@@ -1,9 +1,11 @@
-SCREEN_W = 800
-SCREEN_H = 600
+# 窗口大小常量配置
+SCREEN_W, SCREEN_H = 800, 600
 SCREEN_SIZE = (SCREEN_W, SCREEN_H)
 
-BG_MULTI = 2.67857
+# 背景图片放大倍数
+BG_MULTI = SCREEN_H / 224
+# 背景角色放大倍数
 PLAYER_MULTI = 2.9
-GRAVITY = 1.0
 
-FONT = 'simkai.ttf'
+# 字体设置
+FONT = 'FixedSys.ttf'
