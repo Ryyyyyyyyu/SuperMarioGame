@@ -2,12 +2,14 @@ import pygame
 
 from source import constants as C
 from source.componets import coin
+from source import tools, setup
 
 
 class Info:
 
-    def __init__(self, state):
+    def __init__(self, state, game_info):
         self.state = state
+        self.game_info = game_info
         self.create_state_labels()
         self.create_info_labels()
         self.flash_coin = coin.FlashingCoin()
@@ -28,6 +30,13 @@ class Info:
             self.state_labels.append((self.create_label('2  PLAYERS GAME'), (272, 405)))
             self.state_labels.append((self.create_label('TOP  -'), (290, 465)))
             self.state_labels.append((self.create_label('000000'), (390, 465)))
+        elif self.state == 'load_screen':
+            self.state_labels.append((self.create_label('WORLD'), (280, 200)))
+            self.state_labels.append((self.create_label('1 - 1'), (430, 200)))
+            self.state_labels.append((self.create_label('X   {}'.format(self.game_info.get('lives'))), (380, 280)))
+            self.player_image = tools.get_image(setup.GRAPHICS.get('mario_bros'), 178, 32, 12, 16, (0, 0, 0), C.BG_MULTI)
+        elif self.state == 'game_over':
+            self.state_labels.append((self.create_label('GAME   OVER'), (280, 300)))
 
     def create_info_labels(self):
         self.info_labels = []
@@ -47,3 +56,6 @@ class Info:
         for lable in self.info_labels:
             surface.blit(lable[0], lable[1])
         surface.blit(self.flash_coin.image, self.flash_coin.rect)
+
+        if self.state == 'load_screen':
+            surface.blit(self.player_image, (300, 270))

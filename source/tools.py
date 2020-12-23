@@ -19,10 +19,12 @@ class Game:
 
     def update(self):
         if self.state.finished:
+            game_info = self.state.game_info
             next_state = self.state.next
             # 各种的类中初始化时已经将finished改为False了，这行目前在P11的进度里看看来可以不要
             self.state.finished = False
             self.state = self.state_dict[next_state]
+            self.state.start(game_info)
         self.state.update(self.screen, self.keys)
 
     def run(self):
@@ -35,6 +37,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.display.quit()
+                    quit()
                 elif event.type == pygame.KEYDOWN:
                     self.keys = pygame.key.get_pressed()
                 elif event.type == pygame.KEYUP:

@@ -9,3 +9,9 @@ PLAYER_MULTI = 2.9
 
 # 字体设置
 FONT = 'FixedSys.ttf'
+
+GRAVITY = 1.0
+ANTI_GRAVITY = 0.3
+
+# 临时变量落地高度
+GROUND_HEIGHT= SCREEN_H - 62
