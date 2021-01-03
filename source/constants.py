@@ -6,6 +6,10 @@ SCREEN_SIZE = (SCREEN_W, SCREEN_H)
 BG_MULTI = SCREEN_H / 224
 # 背景角色放大倍数
 PLAYER_MULTI = 2.9
+# 砖块放大倍数
+BRICK_MULTI = SCREEN_H / 224 + 0.01
+# 敌人放大倍数
+ENEMY_MULTI = 2.5
 
 # 字体设置
 FONT = 'FixedSys.ttf'
